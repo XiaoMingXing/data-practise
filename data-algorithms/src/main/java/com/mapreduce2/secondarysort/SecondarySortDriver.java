@@ -1,4 +1,4 @@
-package secondarysort;
+package com.mapreduce2.secondarysort;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

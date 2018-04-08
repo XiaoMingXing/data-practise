@@ -1,4 +1,4 @@
-package secondarysort;
+package com.mapreduce2.secondarysort;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
