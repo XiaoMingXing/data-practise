@@ -60,7 +60,6 @@ public class SecondarySort {
                 System.out.println(t2._1 + "," + t2._2);
             }
             System.out.println("=====");
-
         });
     }
 }
