@@ -42,6 +42,7 @@ public class SecondarySortDriver extends Configured implements Tool {
         job.setPartitionerClass(DateTemperaturePartitioner.class);
         job.setGroupingComparatorClass(DateTemperatureGroupingComparator.class);
 
+        //TODO how to append more mapreduce task in one job
         boolean status = job.waitForCompletion(true);
         logger.info("run(): status=" + status);
         return status ? 0 : 1;
