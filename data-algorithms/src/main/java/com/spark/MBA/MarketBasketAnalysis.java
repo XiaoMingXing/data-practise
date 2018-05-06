@@ -102,6 +102,7 @@ public class MarketBasketAnalysis {
                 .filter((list) -> list.size() != 0)
                 .saveAsTextFile("rules/output/6");
 
+
     }
 
 }

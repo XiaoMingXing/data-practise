@@ -26,13 +26,11 @@ public class SecondarySort {
         String outputPath = args[1];
         System.out.println("outputPath=" + outputPath);
 
-
         // connect to the spark master
         SparkConf conf = new SparkConf()
                 .setAppName("SecondarySort")
                 .setMaster("local[*]");
         JavaSparkContext ctx = new JavaSparkContext(conf);
-
 
         JavaPairRDD<String, Iterable<Tuple2<Integer, Integer>>> values = ctx
                 .textFile(inputPath, 1)
@@ -51,7 +49,6 @@ public class SecondarySort {
                     Collections.sort(list, new TupleComparator());
                     return list;
                 });
-
 
         values.collect().forEach((t) -> {
             Iterable<Tuple2<Integer, Integer>> list = t._2;

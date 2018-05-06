@@ -58,5 +58,4 @@ public class Combination {
         System.out.println(combinations.size());
         System.out.println(combinations);
     }
-
 }

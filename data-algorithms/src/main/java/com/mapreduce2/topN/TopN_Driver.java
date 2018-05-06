@@ -13,8 +13,6 @@ public class TopN_Driver {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf);
 
-
-
         System.exit(job.waitForCompletion(true) ? 0 : 1);
     }
 
