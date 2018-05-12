@@ -15,7 +15,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class MarketBasketAnalysis {
 
-    private static JavaSparkContext createJavaSparkContext() throws Exception {
+    public static JavaSparkContext createJavaSparkContext() throws Exception {
         SparkConf conf = new SparkConf()
                 .setAppName("market basket analysis")
                 .setMaster("local[*]")
