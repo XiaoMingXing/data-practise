@@ -25,7 +25,68 @@ public class MovieRecommendationWithJoin {
         JavaSparkContext jsc = createJavaSparkContext();
         JavaRDD<String> userRatings = jsc.textFile(inputPath);
 
-        JavaPairRDD<String, Tuple3<String, Integer, Integer>> usersRDD = userRatings
+        JavaPairRDD<String, Tuple3<String, Integer, Integer>> usersRDD = calculateNumberOfRaters(userRatings);
+
+        JavaPairRDD<String, Tuple2<Tuple3<String, Integer, Integer>,
+                Tuple3<String, Integer, Integer>>> joinRDD = joinRDD(usersRDD);
+
+
+        JavaPairRDD<Tuple2<String, String>,
+                Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>>
+                rddWithValue = calculateRecordValue(joinRDD);
+
+        // collect the scores of (movieA, movieB) from different users
+        JavaPairRDD<Tuple2<String, String>, Tuple3<Double, Double, Double>> results = rddWithValue
+                .groupByKey()
+                .mapValues(MovieRecommendationWithJoin::calculateCorrelations);
+
+
+        results.collect().forEach(System.out::println);
+    }
+
+    public static JavaPairRDD<Tuple2<String, String>, Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> calculateRecordValue(JavaPairRDD<String, Tuple2<Tuple3<String, Integer, Integer>, Tuple3<String, Integer, Integer>>> joinRDD) {
+        return joinRDD.mapToPair(item -> {
+            Tuple3<String, Integer, Integer> movie1 = item._2._1;
+            Tuple3<String, Integer, Integer> movie2 = item._2._2;
+            Tuple2<String, String> resultKey = new Tuple2<>(movie1._1(), movie2._1());
+
+            // don't know what's this
+            int ratingProduct = movie1._2() * movie2._2();
+
+            // calculate x^2 and y^2
+            int rating1Squared = movie1._2() * movie1._2();
+            int rating2Squared = movie2._2() * movie2._2();
+
+            Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer> resultValue = new Tuple7<>(
+                    movie1._2(), // movie1.rating as x
+                    movie1._3(), // movie1.numberOfRaters n(x)
+                    movie2._2(), // movie2.rating as y
+                    movie2._3(), // movie2.numberOfRaters n(y)
+                    ratingProduct, // x*y
+                    rating1Squared, // x^2
+                    rating2Squared  // y^2
+            );
+            return new Tuple2<>(resultKey, resultValue);
+        });
+    }
+
+    public static JavaPairRDD<String, Tuple2<Tuple3<String, Integer, Integer>, Tuple3<String, Integer, Integer>>> joinRDD(JavaPairRDD<String, Tuple3<String, Integer, Integer>> usersRDD) {
+        return usersRDD
+                .join(usersRDD)
+                .filter(item -> {
+                    Tuple3<String, Integer, Integer> movie1 = item._2._1;
+                    Tuple3<String, Integer, Integer> movie2 = item._2._2;
+                    String movieName1 = movie1._1();
+                    String movieName2 = movie2._1();
+                    if (movieName1.compareTo(movieName2) < 0) {
+                        return true;
+                    }
+                    return false;
+                });
+    }
+
+    public static JavaPairRDD<String, Tuple3<String, Integer, Integer>> calculateNumberOfRaters(JavaRDD<String> userRatings) {
+        return userRatings
                 .mapToPair((s) -> {
                     String[] record = s.split("\\s");
                     String user = record[0];
@@ -47,51 +108,6 @@ public class MovieRecommendationWithJoin {
                     });
                     return tuples.iterator();
                 });
-
-        JavaPairRDD<Tuple2<String, String>,
-                Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> joinedRDD = usersRDD
-                .join(usersRDD)
-                .filter(item -> {
-                    Tuple3<String, Integer, Integer> movie1 = item._2._1;
-                    Tuple3<String, Integer, Integer> movie2 = item._2._2;
-                    String movieName1 = movie1._1();
-                    String movieName2 = movie2._1();
-                    if (movieName1.compareTo(movieName2) < 0) {
-                        return true;
-                    }
-                    return false;
-                })
-                .mapToPair(item -> {
-                    Tuple3<String, Integer, Integer> movie1 = item._2._1;
-                    Tuple3<String, Integer, Integer> movie2 = item._2._2;
-                    Tuple2<String, String> resultKey = new Tuple2<>(movie1._1(), movie2._1());
-
-                    // don't know what's this
-                    int ratingProduct = movie1._2() * movie2._2();
-
-                    // calculate x^2 and y^2
-                    int rating1Squared = movie1._2() * movie1._2();
-                    int rating2Squared = movie2._2() * movie2._2();
-
-                    Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer> resultValue = new Tuple7<>(
-                            movie1._2(), // movie1.rating as x
-                            movie1._3(), // movie1.numberOfRaters n(x)
-                            movie2._2(), // movie2.rating as y
-                            movie2._3(), // movie2.numberOfRaters n(y)
-                            ratingProduct, // x*y
-                            rating1Squared, // x^2
-                            rating2Squared  // y^2
-                    );
-                    return new Tuple2<>(resultKey, resultValue);
-                });
-
-        // collect the scores of (movieA, movieB) from different users
-        JavaPairRDD<Tuple2<String, String>, Tuple3<Double, Double, Double>> results = joinedRDD
-                .groupByKey()
-                .mapValues(MovieRecommendationWithJoin::calculateCorrelations);
-
-
-        results.collect().forEach(System.out::println);
     }
 
     private static Tuple3<Double, Double, Double> calculateCorrelations(
