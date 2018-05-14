@@ -71,27 +71,3 @@ public class RelativeFrequencyMapper extends Mapper<LongWritable, Text, PairOfWo
 
     }
 }
-
-// I love you because of you are stupid
-
-// ((I,love), 1)
-// ((I,*), 1)
-
-
-// TODO 统计词频中统计相对频度的作用及优点
-// Input -> W1 W2 W3 W4 W5
-// Step1: -> (W1,W2) 1
-//           (W1,W3) 1
-//           (W1,*)  2
-//           (W2,W1) 1
-//           (W2, *) 1
-
-
-// Step2: -> (W1,W2) , 0.43
-//           (W1,W3),  0.07
-//           (W2, W1), 0.25
-//           (W2, W3), 0.22
-//           (W2, W4), 0.02
-// ...
-
-// PageRank
