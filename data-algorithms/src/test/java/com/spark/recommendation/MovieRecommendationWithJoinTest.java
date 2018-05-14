@@ -19,6 +19,7 @@ public class MovieRecommendationWithJoinTest extends SharedJavaSparkContext impl
     private static final long serialVersionUID = -5681683598336701496L;
 
 
+    @Test
     public void shouldContainNumberOfRaters() {
 
         List<String> input = Arrays.asList("User1 Movie1 3", "User1 Movie2 4");
@@ -35,6 +36,7 @@ public class MovieRecommendationWithJoinTest extends SharedJavaSparkContext impl
 
         ClassTag<Tuple2<String, Tuple3<String, Integer, Integer>>> tag =
                 scala.reflect.ClassTag$.MODULE$.apply(Tuple2.class);
+
 
         result.collect().forEach(System.out::println);
 

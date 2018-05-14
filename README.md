@@ -13,12 +13,12 @@ https://hadoop.apache.org/docs/r2.4.1/hadoop-yarn/hadoop-yarn-common/yarn-defaul
 `yarn logs -applicationId <Application ID>`
 
 - Spark submit job test
-`spark-submit --deploy-mode client  --class org.apache.spark.examples.SparkPi  $SPARK_HOME/examples/jars/spark-examples_2.11-2.2.0.jar 10`
-`spark-submit --class com.spark.secondarysort.SecondarySort     --master yarn     --deploy-mode cluster     ~/jars/data-algorithms-1.0-SNAPSHOT-jar-with-dependencies.jar    sampleinput.txt spark_output`
+    + `spark-submit --deploy-mode client  --class org.apache.spark.examples.SparkPi  $SPARK_HOME/examples/jars/spark-examples_2.11-2.2.0.jar 10`
+    + `spark-submit --class com.spark.secondarysort.SecondarySort     --master yarn     --deploy-mode cluster     ~/jars/data-algorithms-1.0-SNAPSHOT-jar-with-dependencies.jar    sampleinput.txt spark_output`
 
 - MapReduce job test
-`hadoop jar ~/jars/data-algorithms-1.0-SNAPSHOT-jar-with-dependencies.jar com.mapreduce2.secondarysort.SecondarySortDriver sampleinput.txt mr_output`
-`yarn jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.1.jar com.mapreduce2.secondarysort.SecondarySortDriver`
+    + `hadoop jar ~/jars/data-algorithms-1.0-SNAPSHOT-jar-with-dependencies.jar com.mapreduce2.secondarysort.SecondarySortDriver sampleinput.txt mr_output`
+    + `yarn jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.1.jar com.mapreduce2.secondarysort.SecondarySortDriver`
 
 - copy the folder
 `scp yarn-site.xml node2:~/hadoop/etc/hadoop`
