@@ -21,6 +21,7 @@ public class MovieRecommendationWithJoin {
         }
 
         String inputPath = args[0];
+        String outputPath = args[1];
 
         JavaSparkContext jsc = createJavaSparkContext();
         JavaRDD<String> userRatings = jsc.textFile(inputPath);
@@ -40,8 +41,7 @@ public class MovieRecommendationWithJoin {
                 .groupByKey()
                 .mapValues(MovieRecommendationWithJoin::calculateCorrelations);
 
-
-        results.collect().forEach(System.out::println);
+        results.saveAsTextFile(outputPath);
     }
 
     public static JavaPairRDD<Tuple2<String, String>, Tuple7<Integer, Integer, Integer, Integer, Integer, Integer, Integer>> calculateRecordValue(JavaPairRDD<String, Tuple2<Tuple3<String, Integer, Integer>, Tuple3<String, Integer, Integer>>> joinRDD) {
