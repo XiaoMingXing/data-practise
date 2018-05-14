@@ -7,5 +7,5 @@ spark-submit \
 --master yarn \
 --deploy-mode cluster \
 /home/ubuntu/data-practise/data-algorithms/target/data-algorithms-1.0-SNAPSHOT-jar-with-dependencies.jar \
-/user/ubuntu/movies.txt
-/user/ubuntu/output
+/user/ubuntu/movies.txt \
+/user/ubuntu/movieoutput
