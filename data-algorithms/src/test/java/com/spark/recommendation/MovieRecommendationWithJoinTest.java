@@ -19,26 +19,25 @@ public class MovieRecommendationWithJoinTest extends SharedJavaSparkContext impl
 
 
     public void shouldContainNumberOfRaters() {
-        // Create and run the test
-//        List<String> input = Arrays.asList("1\tHeart", "2\tDiamonds");
-//        JavaRDD<String> inputRDD = jsc().parallelize(input);
-//        JavaPairRDD<String, Tuple3<String, Integer, Integer>> result =
-//                MovieRecommendationWithJoin.calculateNumberOfRaters(inputRDD);
-//
-//        // Create the expected output
-//        List<Tuple2<String, Integer>> expectedInput = Arrays.asList(
-//                new Tuple2<>("Heart", 1),
-//                new Tuple2<>("Diamonds", 2));
-//        JavaPairRDD<String, Integer> expectedRDD = jsc()
-//                .parallelizePairs(expectedInput);
-//
-//        ClassTag<Tuple2<String, Integer>> tag =
-//                scala.reflect.ClassTag$.MODULE$
-//                        .apply(Tuple2.class);
-//
-//        // Run the assertions on the result and expected
-//        JavaRDDComparisons.assertRDDEquals(
-//                JavaRDD.fromRDD(JavaPairRDD.toRDD(result), tag),
-//                JavaRDD.fromRDD(JavaPairRDD.toRDD(expectedRDD), tag));
+
+        List<String> input = Arrays.asList("User1 Movie1 3", "User1 Movie2 4");
+        JavaRDD<String> inputRDD = jsc().parallelize(input);
+        JavaPairRDD<String, Tuple3<String, Integer, Integer>> result =
+                MovieRecommendationWithJoin.calculateNumberOfRaters(inputRDD);
+
+        // Create the expected output
+        List<Tuple2<String, Tuple3<String, Integer, Integer>>> expectedInput = Arrays.asList(
+                new Tuple2<>("User1", new Tuple3<>("Movie1", 3, 2)),
+                new Tuple2<>("User1", new Tuple3<>("Movie2", 4, 2)));
+        JavaPairRDD<String, Tuple3<String, Integer, Integer>> expectedRDD = jsc()
+                .parallelizePairs(expectedInput);
+
+        ClassTag<Tuple2<String, Tuple3<String, Integer, Integer>>> tag =
+                scala.reflect.ClassTag$.MODULE$.apply(Tuple2.class);
+
+        // Run the assertions on the result and expected
+        JavaRDDComparisons.assertRDDEquals(
+                JavaRDD.fromRDD(JavaPairRDD.toRDD(result), tag),
+                JavaRDD.fromRDD(JavaPairRDD.toRDD(expectedRDD), tag));
     }
 }
