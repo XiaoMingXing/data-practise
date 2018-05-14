@@ -16,7 +16,7 @@ import static com.spark.SparkContextBuilder.createJavaSparkContext;
 public class MovieRecommendationWithJoin {
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
+        if (args.length != 2) {
             throw new IllegalArgumentException("Usage: " + " <input-path> <output-path>");
         }
 
