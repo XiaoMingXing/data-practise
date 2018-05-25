@@ -6,7 +6,7 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
-public class CombinationTest {
+class CombinationTest {
 
     @Test
     void shouldReturnCorrectList() {

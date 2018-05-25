@@ -9,8 +9,8 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class Combination {
 
-    public static <T extends Comparable<? super T>> List<List<T>> findSortedCombinations(Collection<T> elements, int n) {
-        List<List<T>> result = new ArrayList<List<T>>();
+    static <T extends Comparable<? super T>> List<List<T>> findSortedCombinations(Collection<T> elements, int n) {
+        List<List<T>> result = new ArrayList<>();
         if (n == 0) {
             result.add(newArrayList());
             return result;
@@ -50,7 +50,7 @@ public class Combination {
         return result;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ArrayList<String> list = newArrayList("a", "b", "c", "d");
         System.out.println("list=" + list);
         List<List<String>> combinations = findSortedCombinations(list);

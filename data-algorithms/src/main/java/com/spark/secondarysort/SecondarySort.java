@@ -45,7 +45,7 @@ public class SecondarySort {
                 .mapValues((Function<Iterable<Tuple2<Integer, Integer>>,
                         Iterable<Tuple2<Integer, Integer>>>) v1 -> {
                     ArrayList<Tuple2<Integer, Integer>> list = newArrayList(v1);
-                    Collections.sort(list, new TupleComparator());
+                    list.sort(new TupleComparator());
                     return list;
                 });
 
