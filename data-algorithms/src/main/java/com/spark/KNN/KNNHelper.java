@@ -12,7 +12,6 @@ class KNNHelper {
 
     private static final String DELIMITER = ",";
 
-
     private static List<Double> splitOnToListOfDouble(String str) {
         return newArrayList(Splitter.on(KNNHelper.DELIMITER).trimResults().split(str))
                 .stream()
