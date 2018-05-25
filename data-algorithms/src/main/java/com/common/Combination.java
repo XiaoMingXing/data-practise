@@ -9,8 +9,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public class Combination {
 
-    public static <T extends Comparable<? super T>> List<List<T>>
-    findSortedCombinations(Collection<T> elements, int n) {
+    public static <T extends Comparable<? super T>> List<List<T>> findSortedCombinations(Collection<T> elements, int n) {
         List<List<T>> result = new ArrayList<List<T>>();
         if (n == 0) {
             result.add(newArrayList());

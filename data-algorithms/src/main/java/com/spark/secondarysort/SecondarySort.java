@@ -2,6 +2,7 @@ package com.spark.secondarysort;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.PairFunction;
@@ -21,10 +22,7 @@ public class SecondarySort {
             System.exit(1);
         }
         String inputPath = args[0];
-        System.out.println("inputPath=" + inputPath);
-
         String outputPath = args[1];
-        System.out.println("outputPath=" + outputPath);
 
         // connect to the spark master
         SparkConf conf = new SparkConf()
@@ -32,8 +30,9 @@ public class SecondarySort {
                 .setMaster("local[*]");
         JavaSparkContext ctx = new JavaSparkContext(conf);
 
-        JavaPairRDD<String, Iterable<Tuple2<Integer, Integer>>> values = ctx
-                .textFile(inputPath, 1)
+        JavaRDD<String> dataRDD = ctx.textFile(inputPath, 1);
+
+        JavaPairRDD<String, Iterable<Tuple2<Integer, Integer>>> values = dataRDD
                 .mapToPair((PairFunction<String, String, Tuple2<Integer, Integer>>) s -> {
                     String[] tokens = s.split(",");
                     System.out.println(tokens[0] + "," + tokens[1] + "," + tokens[2]);
@@ -50,13 +49,6 @@ public class SecondarySort {
                     return list;
                 });
 
-        values.collect().forEach((t) -> {
-            Iterable<Tuple2<Integer, Integer>> list = t._2;
-            System.out.println(t._1);
-            for (Tuple2<Integer, Integer> t2 : list) {
-                System.out.println(t2._1 + "," + t2._2);
-            }
-            System.out.println("=====");
-        });
+        values.saveAsTextFile(outputPath);
     }
 }

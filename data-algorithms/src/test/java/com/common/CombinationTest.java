@@ -14,7 +14,7 @@ public class CombinationTest {
         List<List<String>> combinations = Combination
                 .findSortedCombinations(newArrayList("A", "B", "C", "D"), 2);
 
-        combinations.forEach((combination) -> System.out.println(combination));
+        combinations.forEach(System.out::println);
 
     }
 }
