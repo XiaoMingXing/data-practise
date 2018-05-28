@@ -65,4 +65,10 @@ class KNNHelper {
         return Collections.max(majority.entrySet(),
                 Comparator.comparing(Map.Entry::getValue)).getKey();
     }
+
+    static Map<String, Integer> buildClassificationCountInMap(List<Tuple2<Double, String>> nearestK) {
+        Map<String, Integer> majority = new HashMap<>();
+        nearestK.forEach((item) -> majority.merge(item._2, 1, (exist, current) -> exist + current));
+        return majority;
+    }
 }
