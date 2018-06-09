@@ -38,27 +38,27 @@ public class CountTrianglesDriver {
         FileOutputFormat.setOutputPath(job1, outputPath);
 
 
-//        Job job2 = Job.getInstance();
-//        job2.setJobName("triangles");
-//        job2.setMapperClass(TriadsMapper.class);
-//        job2.setReducerClass(TriadsReducer.class);
-//        job2.setMapOutputKeyClass(PairOfLongs.class);
-//        job2.setMapOutputValueClass(LongWritable.class);
-//        job2.setOutputKeyClass(Text.class);
-//        job2.setOutputValueClass(Text.class);
-//        job2.setInputFormatClass(SequenceFileInputFormat.class);
-//        job2.setOutputFormatClass(TextOutputFormat.class);
-//
-//        Path outputPath2 = new Path("triangles/tmp2");
-//        outputPath.getFileSystem(job1.getConfiguration()).delete(outputPath2, true);
-//
-//        FileInputFormat.addInputPath(job2, outputPath);
-//        FileOutputFormat.setOutputPath(job2, outputPath2);
+        Job job2 = Job.getInstance();
+        job2.setJobName("triangles");
+        job2.setMapperClass(TriadsMapper.class);
+        job2.setReducerClass(TriadsReducer.class);
+        job2.setMapOutputKeyClass(PairOfLongs.class);
+        job2.setMapOutputValueClass(LongWritable.class);
+        job2.setOutputKeyClass(Text.class);
+        job2.setOutputValueClass(Text.class);
+        job2.setInputFormatClass(SequenceFileInputFormat.class);
+        job2.setOutputFormatClass(TextOutputFormat.class);
+
+        Path outputPath2 = new Path("triangles/tmp2");
+        outputPath.getFileSystem(job1.getConfiguration()).delete(outputPath2, true);
+
+        FileInputFormat.addInputPath(job2, outputPath);
+        FileOutputFormat.setOutputPath(job2, outputPath2);
 
         int status = job1.waitForCompletion(true) ? 0 : 1;
-//        if (status == 0) {
-//            status = job2.waitForCompletion(true) ? 0 : 1;
-//        }
+        if (status == 0) {
+            status = job2.waitForCompletion(true) ? 0 : 1;
+        }
         System.exit(status);
     }
 

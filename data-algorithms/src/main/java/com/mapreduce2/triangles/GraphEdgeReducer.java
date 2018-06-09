@@ -15,7 +15,7 @@ public class GraphEdgeReducer extends Reducer<LongWritable, LongWritable, PairOf
     LongWritable v2 = new LongWritable();
 
 
-    private String getValue(Iterable<LongWritable> ends) {
+    private String getValue(Iterable<Long> ends) {
         StringBuffer stringBuffer = new StringBuffer();
         ends.forEach((value -> {
             stringBuffer.append(value + ",");
@@ -27,17 +27,19 @@ public class GraphEdgeReducer extends Reducer<LongWritable, LongWritable, PairOf
     public void reduce(LongWritable start, Iterable<LongWritable> ends, Context context)
             throws IOException, InterruptedException {
         v2.set(0);
+        List<Long> nodes = newArrayList();
         for (LongWritable end : ends) {
             k2.set(start.get(), end.get());
+            // should not add LongWritable type into the node list
+            nodes.add(end.get());
             context.write(k2, v2);
         }
 
-        List<LongWritable> nodes = newArrayList(ends);
         System.out.println(String.format("[Reducer] Receive the record %s:(%s)", start, getValue(nodes)));
         Collections.sort(nodes);
         for (int index = 0; index < nodes.size() - 1; index++) {
-            long nodeA = nodes.get(index).get();
-            long nodeB = nodes.get(index + 1).get();
+            long nodeA = nodes.get(index);
+            long nodeB = nodes.get(index + 1);
             k2.set(nodeA, nodeB);
             v2.set(start.get());
             context.write(k2, v2);
