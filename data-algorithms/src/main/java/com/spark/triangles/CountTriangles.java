@@ -14,7 +14,7 @@ public class CountTriangles {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {
-            throw new IllegalArgumentException("Usage: CountTriangles " + " <hdfs file>");
+            throw new IllegalArgumentException("Usage: CountTrianglesDriver " + " <hdfs file>");
         }
 
         String inputPath = args[0];
@@ -22,11 +22,7 @@ public class CountTriangles {
 
         jsc.textFile(inputPath)
                 .flatMapToPair((record) -> {
-                    String[] nodes = record.split(",");
-                    String start = nodes[0];
-                    String end = nodes[1];
-                    List<Tuple2<String, String>> result =
-                            newArrayList(new Tuple2<>(start, end), new Tuple2<>(end, start));
+                    List<Tuple2<String, String>> result = TriangleHelper.mapToEdges(record);
                     return result.iterator();
                 })
                 .groupByKey()
