@@ -4,7 +4,9 @@ import org.junit.Test;
 import scala.Tuple2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
@@ -35,4 +37,17 @@ public class SparkMarkovTest {
         assertThat(result.get(0), is("SL"));
         assertThat(result.get(1), is("LL"));
     }
+
+    @Test
+    public void name() {
+
+        Integer total = Stream.of(1, 2, 3)
+                .reduce((prev, next) -> prev + next).get();
+
+        System.out.println(total);
+    }
+
+
+
+
 }
