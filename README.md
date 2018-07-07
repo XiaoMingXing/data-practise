@@ -38,3 +38,8 @@ The container logs should be under yarn.nodemanager.log-dirs:
 
 ###TODO
 
+
+### Avro
+
+#### Scripts to generate Java classes based on avro schema definition
+`java -jar ../lib/avro-tools-1.8.2.jar compile schema src/main/avro/employee.avsc src/main/java`
