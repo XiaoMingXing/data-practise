@@ -11,6 +11,7 @@
     <modules>
         <module>data-algorithms</module>
         <module>data-playground</module>
+        <module>data-lambda</module>
     </modules>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

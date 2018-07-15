@@ -65,11 +65,7 @@
             <artifactId>okhttp</artifactId>
             <version>3.8.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>0.10.2.0</version>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
@@ -80,6 +76,7 @@
             <artifactId>kafka-avro-serializer</artifactId>
             <version>3.2.1</version>
         </dependency>
+
     </dependencies>
 
     <build>
