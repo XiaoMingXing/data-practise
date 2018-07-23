@@ -17,7 +17,8 @@ public class TopN_Mapper extends Mapper<LongWritable, Text, Text, DoubleWritable
 
     @Override
     public void setup(Context context) {
-        top_n = context.getConfiguration().getInt("top.n", 5);
+        top_n = context.getConfiguration()
+                .getInt("top.n", 5);
     }
 
     @Override
