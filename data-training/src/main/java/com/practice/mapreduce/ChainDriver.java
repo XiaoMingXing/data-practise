@@ -1,5 +1,6 @@
 package com.practice.mapreduce;
 
+import com.practice.mapreduce.topN.TopNDriver;
 import com.practice.mapreduce.wordcount.WordCountDriver;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.jobcontrol.ControlledJob;
@@ -22,12 +23,14 @@ public class ChainDriver {
         ControlledJob controlledJob1 = new ControlledJob(job1.getConfiguration());
 
         String[] topNArgs = new String[]{args[1], args[2]};
-        Job job2 = WordCountDriver.getJob(topNArgs);
+        Job job2 = TopNDriver.getJob(topNArgs);
         ControlledJob controlledJob2 = new ControlledJob(job2.getConfiguration());
 
 
         jobControl.addJob(controlledJob1);
         jobControl.addJob(controlledJob2);
+
+        controlledJob2.addDependingJob(controlledJob1);
 
         Thread jobRunnerThread = new Thread(new JobRunner(jobControl));
         jobRunnerThread.start();
@@ -42,5 +45,4 @@ public class ChainDriver {
         System.out.println("done");
         jobControl.stop();
     }
-
 }
