@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.TreeMap;
 
 public class TopNMapper extends
-        Mapper<Text, IntWritable, Text, IntWritable> {
+        Mapper<Text, Text, Text, IntWritable> {
 
     private final TreeMap<Integer, String> resultMap = new TreeMap<>();
 
@@ -21,8 +21,8 @@ public class TopNMapper extends
 
 
     @Override
-    public void map(Text key, IntWritable value, Context context) {
-        int count = value.get();
+    public void map(Text key, Text value, Context context) {
+        int count = Integer.parseInt(value.toString());
         String word = key.toString();
         resultMap.put(count, word);
         if (resultMap.size() > this.top_n) {

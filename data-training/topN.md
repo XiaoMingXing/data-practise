@@ -110,7 +110,7 @@ public class TopNDriver {
         }
 
         Configuration configuration = new Configuration();
-        configuration.setInt("top.n", 6);
+        configuration.setInt("top.n", 3);
 
         Job job = Job.getInstance(configuration);
         Path inputPath = new Path(args[0]);
@@ -121,12 +121,15 @@ public class TopNDriver {
 
         job.setMapperClass(TopNMapper.class);
         job.setReducerClass(TopNReducer.class);
+        job.setCombinerClass(TopNReducer.class);
 
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
 
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+
+        job.setInputFormatClass(KeyValueTextInputFormat.class);
 
         outputDir.getFileSystem(configuration).delete(outputDir);
 
@@ -135,4 +138,11 @@ public class TopNDriver {
     }
 }
 ```
+
+Notes: in this case, we use KeyValueTextInputFormat to load the input. this class will load the lines as key-value pairs
+
+
+#### Practice three - Customize partitioner
+
+
 

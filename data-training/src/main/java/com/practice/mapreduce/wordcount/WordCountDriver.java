@@ -19,6 +19,12 @@ public class WordCountDriver {
             throw new IllegalArgumentException("Wrong arguments, at least two");
         }
 
+        Job job = getJob(args);
+
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+
+    public static Job getJob(String[] args) throws IOException {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");
 
@@ -41,6 +47,6 @@ public class WordCountDriver {
         //delete the output dir
         outputDir.getFileSystem(conf).delete(outputDir);
 
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
+        return job;
     }
 }
