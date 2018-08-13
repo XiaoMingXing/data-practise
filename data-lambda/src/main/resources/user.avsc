@@ -1,0 +1,10 @@
+{
+   "type": "record",
+   "namespace": "com.person",
+   "name": "FullName",
+   "fields": [
+     { "name": "username", "type": "string" },
+     { "name": "email", "type": "string", "default": "xiaomixin@gmail.com" },
+     { "name": "address", "type": "string" }
+   ]
+ }

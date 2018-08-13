@@ -36,8 +36,6 @@ public class ChainDriver {
         jobRunnerThread.start();
 
         while (!jobControl.allFinished()) {
-            System.out.println("Jobs in waiting state: " + jobControl.getWaitingJobList().size());
-            System.out.println("Jobs in ready state: " + jobControl.getReadyJobsList().size());
             System.out.println("Jobs in running state: " + jobControl.getRunningJobList().size());
             System.out.println("Jobs in success state: " + jobControl.getSuccessfulJobList().size());
             System.out.println("Jobs in failed state: " + jobControl.getFailedJobList().size());

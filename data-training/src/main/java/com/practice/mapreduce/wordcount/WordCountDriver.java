@@ -27,6 +27,7 @@ public class WordCountDriver {
     public static Job getJob(String[] args) throws IOException {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "word count");
+        job.setJarByClass(WordCountDriver.class);
 
         //input and output
         FileInputFormat.addInputPath(job, new Path(args[0]));
