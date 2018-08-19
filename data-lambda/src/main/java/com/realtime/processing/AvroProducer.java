@@ -7,8 +7,10 @@ import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 
 import java.util.Properties;
+import java.util.concurrent.Future;
 
 public class AvroProducer {
 
@@ -33,7 +35,11 @@ public class AvroProducer {
             byte[] bytes = recordInjection.apply(avroRecord);
 
             ProducerRecord<String, byte[]> record = new ProducerRecord<>("click-stream", bytes);
-            producer.send(record);
+            producer.send(record, (recordMetadata, e) -> {
+                if (e != null) {
+                    e.printStackTrace();
+                }
+            });
 
             Thread.sleep(250);
 

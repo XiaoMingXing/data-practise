@@ -1,8 +1,9 @@
 {
    "type": "record",
-   "namespace": "com.person",
-   "name": "FullName",
+   "namespace": "com.realtime.avro",
+   "name": "User",
    "fields": [
+     { "name": "userId", "type": "string" },
      { "name": "username", "type": "string" },
      { "name": "email", "type": "string", "default": "xiaomixin@gmail.com" },
      { "name": "address", "type": "string" }
