@@ -23,7 +23,12 @@ public class AvroConsumer {
         consumer.subscribe(newArrayList(Constants.KAFKA_TOPICS));
         while (true) {
             ConsumerRecords<String, User> records = consumer.poll(600);
-            records.forEach((record) -> System.out.println(record.key() + ":" + record.value()));
+            records.forEach((record) -> {
+                System.out.println("Offset:" + record.offset());
+                System.out.println("Partition:" + record.partition());
+                System.out.println("Key:" + record.key());
+                System.out.println("Value:" + record.value());
+            });
             consumer.commitSync();
         }
     }

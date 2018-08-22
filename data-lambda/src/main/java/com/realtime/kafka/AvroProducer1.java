@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 import static com.realtime.common.KafkaConfigUtil.createAvroProducerConfig;
 
-public class AvroProducer {
+public class AvroProducer1 {
 
     public static void main(String... args) {
         Properties props = createAvroProducerConfig();
@@ -25,7 +25,7 @@ public class AvroProducer {
             ProducerRecord<String, User> record = new ProducerRecord<>(Constants.KAFKA_TOPICS,
                     user.getUsername().toString(), user);
             producer.send(record, ((metadata, exception) -> {
-                System.out.println(String.format("Save into %s", metadata.partition()));
+                System.out.println(String.format("Save user into %s", metadata.partition()));
             }));
         }
 
