@@ -11,16 +11,12 @@ import java.io.Console;
 import java.util.Properties;
 import java.util.Scanner;
 
+import static com.realtime.common.KafkaConfigUtil.createAvroProducerConfig;
+
 public class AvroProducer {
 
     public static void main(String... args) {
-
-        Properties props = new Properties();
-        props.put("bootstrap.servers", Constants.KAFKA_BROKERS);
-        props.put("key.serializer", KafkaAvroSerializer.class);
-        props.put("value.serializer", KafkaAvroSerializer.class);
-        props.put("schema.registry.url", Constants.SCHEMA_REGISTRY_URL);
-
+        Properties props = createAvroProducerConfig();
         KafkaProducer<String, User> producer = new KafkaProducer<>(props);
         Scanner scanner = new Scanner(System.in);
         while (true) {
