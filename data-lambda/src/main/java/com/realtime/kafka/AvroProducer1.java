@@ -28,6 +28,5 @@ public class AvroProducer1 {
                 System.out.println(String.format("Save user into %s", metadata.partition()));
             }));
         }
-
     }
 }

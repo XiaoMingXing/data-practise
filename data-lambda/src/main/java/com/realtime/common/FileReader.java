@@ -1,13 +1,15 @@
 package com.realtime.common;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
+import com.realtime.avro.Order;
 import org.bouncycastle.util.Arrays;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class FileReader {
@@ -85,5 +87,49 @@ public class FileReader {
         } finally {
             is.close();
         }
+    }
+
+
+    List<Order> getOrders() throws IOException {
+        ArrayList<Order> orders = new ArrayList<>();
+
+        Reader reader = Files.newBufferedReader(Paths.get(Objects.requireNonNull(this.getFilePath())));
+        CsvToBean<CsvOrder> csvToBean = new CsvToBeanBuilder(reader)
+                .withType(CsvOrder.class)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build();
+
+
+        Iterator<CsvOrder> csvOrders = csvToBean.iterator();
+        while (csvOrders.hasNext()) {
+            CsvOrder csvOrder = csvOrders.next();
+
+            Order order = Order.newBuilder()
+                    .setCustomerId(csvOrder.getCustomer_id())
+                    .setBookingDestinationLatitude(csvOrder.getBooking_destination_latitude())
+                    .setBookingDestinationLongitude(csvOrder.getBooking_destination_longitude())
+                    .setBookingDestinationS2id(csvOrder.getBooking_destination_s2id())
+                    .setBookingPickupToDestinationDistanceKm(csvOrder.getBooking_pickup_to_destination_distance_km())
+                    .setBookingTime(csvOrder.getBooking_time())
+                    .setCbv(csvOrder.getCbv())
+                    .setCollection(csvOrder.getCollection())
+                    .setDynamicSurgeFactor(csvOrder.getDynamic_surge_factor())
+                    .setItemTotalCnt(csvOrder.getItem_total_cnt())
+                    .setItemUniqueCnt(csvOrder.getItem_unique_cnt())
+                    .setVoucherId(csvOrder.getVoucher_id())
+                    .setMerchantCategory(csvOrder.getMerchant_category())
+                    .setMerchantId(csvOrder.getMerchant_id())
+                    .setMerchantLatitude(csvOrder.getMerchant_latitude())
+                    .setMerchantLongitude(csvOrder.getMerchant_longitude())
+                    .setMerchantSubCategory(csvOrder.getMerchant_sub_category())
+                    .setNormalizedGmv(csvOrder.getNormalized_gmv())
+                    .setPaymentMethodName(csvOrder.getPayment_method_name())
+                    .setServiceAreaName(csvOrder.getService_area_name())
+                    .setStatusName(csvOrder.getStatus_name())
+                    .build();
+
+            orders.add(order);
+        }
+        return orders;
     }
 }

@@ -16,7 +16,7 @@ public class SchemaBroadcast {
         if (instance == null) {
             synchronized (SchemaBroadcast.class) {
                 if (instance == null) {
-                    File file = FileUtils.getFile("data-lambda/src/main/avro/user.avsc");
+                    File file = FileUtils.getFile("data-lambda/src/main/avro/order.avsc");
                     try {
                         Schema schema = new Schema.Parser().parse(file.getAbsoluteFile());
                         instance = jsc.broadcast(schema.toString());
