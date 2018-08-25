@@ -14,7 +14,7 @@ public class SchemaBroadcast {
 
     static Broadcast<String> getInstance(JavaSparkContext jsc) {
         if (instance == null) {
-            synchronized (SchemaBroadCast.class) {
+            synchronized (SchemaBroadcast.class) {
                 if (instance == null) {
                     File file = FileUtils.getFile("data-lambda/src/main/avro/user.avsc");
                     try {
