@@ -1,0 +1,146 @@
+{
+  "type": "record",
+  "namespace": "com.realtime.avro",
+  "name": "Order",
+  "fields": [
+    {
+      "name": "customer_id",
+      "type": "string"
+    },
+    {
+      "name": "service_area_name",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "booking_time",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "merchant_category",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": "NONE"
+    },
+    {
+      "name": "merchant_sub_category",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "collection",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "merchant_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "status_name",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "voucher_id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "merchant_latitude",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "merchant_longitude",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "booking_destination_latitude",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "booking_destination_longitude",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "booking_destination_s2id",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    },
+    {
+      "name": "booking_pickup_to_destination_distance_km",
+      "type": "double"
+    },
+    {
+      "name": "normalized_gmv",
+      "type": "double"
+    },
+    {
+      "name": "cbv",
+      "type": "float"
+    },
+    {
+      "name": "item_total_cnt",
+      "type": "float"
+    },
+    {
+      "name": "item_unique_cnt",
+      "type": "float"
+    },
+    {
+      "name": "dynamic_surge_factor",
+      "type": "float"
+    },
+    {
+      "name": "payment_method_name",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": ""
+    }
+  ]
+}
+

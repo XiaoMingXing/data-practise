@@ -8,4 +8,5 @@ public class Constants {
     public static final String KAFKA_TOPICS = "click-com.realtime.stream";
     public static final String KAFKA_TOPIC_REGEX = "\\s+(-?com.realtime.stream)";
     public static final String SCHEMA_REGISTRY_URL = "http://13.229.105.134:8081";
+    public static final String SCHEMA_NAME = "avro/order.avsc";
 }

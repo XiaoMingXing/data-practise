@@ -1,5 +1,6 @@
 package com.realtime.customer;
 
+import com.database.HBase;
 import com.realtime.common.Constants;
 import com.realtime.common.KafkaConfigUtil;
 import com.realtime.processing.SchemaBroadcast;
@@ -7,6 +8,7 @@ import org.apache.avro.Schema;
 import org.apache.avro.SchemaValidator;
 import org.apache.avro.SchemaValidatorBuilder;
 import org.apache.avro.generic.GenericData;
+import org.apache.hadoop.hbase.client.Connection;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -24,7 +26,6 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class LocationPrefJob {
-
 
     private void start() throws InterruptedException, IOException {
 
@@ -49,8 +50,11 @@ public class LocationPrefJob {
                     userJavaRDD.foreachPartition((VoidFunction<Iterator<GenericData.Record>>) records -> {
 
                         // get HBase connection
-
+                        HBase hbase = new HBase();
+                        Connection connection = hbase.getHBaseConnection();
                         // normalize Records
+                        LocationPrefParser parser = new LocationPrefParser();
+                        parser.normalizeRecords(records);
 
                         // update HBase connection
 

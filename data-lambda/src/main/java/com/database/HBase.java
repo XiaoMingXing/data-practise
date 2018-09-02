@@ -44,7 +44,12 @@ public class HBase {
         Admin admin = connection.getAdmin();
         TableName[] tableNames = admin.listTableNames(Constants.HTABLE_NAME);
         return tableNames.length > 0;
+    }
 
+    public HTableDescriptor[] listTables(Connection connection) throws IOException {
+
+        Admin admin=connection.getAdmin();
+        return admin.listTables(Constants.HTABLE_NAME);
     }
 
     private HTableDescriptor getTableDescriptor() {
