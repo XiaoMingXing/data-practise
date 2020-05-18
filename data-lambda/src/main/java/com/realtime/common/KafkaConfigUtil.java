@@ -4,6 +4,7 @@ import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.directory.api.util.Strings;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +34,14 @@ public class KafkaConfigUtil {
         props.put("key.serializer", KafkaAvroSerializer.class);
         props.put("value.serializer", KafkaAvroSerializer.class);
         props.put("schema.registry.url", Constants.SCHEMA_REGISTRY_URL);
+        return props;
+    }
+
+    public static Properties createSimpleProducerConfig() {
+        Properties props = new Properties();
+        props.put("bootstrap.servers", Constants.KAFKA_BROKERS);
+        props.put("key.serializer", StringSerializer.class);
+        props.put("value.serializer", StringSerializer.class);
         return props;
     }
 

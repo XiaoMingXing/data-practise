@@ -3,11 +3,9 @@ package com.realtime.kafka;
 import com.realtime.avro.User;
 import com.realtime.common.Constants;
 import com.realtime.common.UserGenerator;
-import io.confluent.kafka.serializers.KafkaAvroSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import java.io.Console;
 import java.util.Properties;
 import java.util.Scanner;
 
