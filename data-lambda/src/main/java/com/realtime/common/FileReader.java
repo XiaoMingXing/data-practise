@@ -90,7 +90,7 @@ public class FileReader {
     }
 
 
-    List<Order> getOrders() throws IOException {
+    public List<Order> getOrders() throws IOException {
         ArrayList<Order> orders = new ArrayList<>();
 
         Reader reader = Files.newBufferedReader(Paths.get(Objects.requireNonNull(this.getFilePath())));

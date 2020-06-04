@@ -1,15 +1,10 @@
 package com.realtime.customer;
 
-import com.realtime.common.OrderGenerator;
-import org.apache.avro.Schema;
+import com.realtime.generator.OrderGenerator;
 import org.apache.avro.generic.GenericData;
-import org.apache.avro.generic.GenericRecord;
 import org.junit.Test;
 
-import java.net.URL;
 import java.util.Iterator;
-
-import static org.junit.Assert.*;
 
 public class LocationPrefParserTest {
 

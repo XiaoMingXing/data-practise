@@ -1,10 +1,10 @@
 package com.realtime.common;
 
 import com.realtime.avro.Order;
+import com.realtime.generator.OrderGenerator;
 import org.apache.avro.generic.GenericData;
 import org.junit.Test;
 
-import java.io.InputStream;
 import java.util.List;
 
 public class OrderGeneratorTest {

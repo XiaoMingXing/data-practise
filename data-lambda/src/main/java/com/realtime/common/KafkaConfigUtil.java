@@ -37,6 +37,20 @@ public class KafkaConfigUtil {
         return props;
     }
 
+
+    public static Map<String, Object> createSparkAvroConsumer(String groupId) {
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("bootstrap.servers", Constants.KAFKA_BROKERS);
+        params.put("key.deserializer", KafkaAvroDeserializer.class);
+        params.put("value.deserializer", KafkaAvroDeserializer.class);
+        params.put("group.id", groupId);
+        params.put("enable.auto.commit", false);
+
+        params.put("schema.registry.url", Constants.SCHEMA_REGISTRY_URL);
+        return params;
+    }
+
     public static Properties createSimpleProducerConfig() {
         Properties props = new Properties();
         props.put("bootstrap.servers", Constants.KAFKA_BROKERS);
@@ -54,17 +68,17 @@ public class KafkaConfigUtil {
         return props;
     }
 
-    public static Map<String, Object> createSparkAvroConsumer(String groupId) {
+    public static Properties getFlinkConsumerConfig() {
+        Properties props = new Properties();
+        props.put("bootstrap.servers", Constants.KAFKA_BROKERS);
+        props.put("zookeeper.connect", Constants.ZK_SERVERS);
+        props.put("group.id", "flink_consumer");
+        return props;
+    }
 
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("bootstrap.servers", Constants.KAFKA_BROKERS);
-        params.put("key.deserializer", KafkaAvroDeserializer.class);
-        params.put("value.deserializer", KafkaAvroDeserializer.class);
-        params.put("group.id", groupId);
-        params.put("enable.auto.commit", false);
-
-        params.put("schema.registry.url", Constants.SCHEMA_REGISTRY_URL);
+    public static Map<String, String> getKafkaTableSourceConfig() {
+        Map<String, String> params = new HashMap<>();
+        params.put("connector.topic", Constants.KAFKA_TOPICS);
         return params;
-
     }
 }
